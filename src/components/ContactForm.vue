@@ -56,6 +56,11 @@ const isFormValid = () => {
         valid = false;
     }
 
+    if (!form.agreeTerms) {
+        errors.agreeTerms = true;
+        valid = false;
+    }
+
     return valid;
 };
 
@@ -105,7 +110,8 @@ const handleSubmit = () => {
 
 
 
-        <TextareaField id="message" label="Message" v-model="form.message" rows="4" wrapper-class="form-group" />
+        <TextareaField id="message" label="Message" v-model="form.message" rows="4" wrapper-class="form-group"
+            :error="errors.agreeTerms" />
 
         <p class="required-note">* required fields</p>
 
