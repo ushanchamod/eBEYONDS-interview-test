@@ -33,7 +33,9 @@ A Vue.js application for browsing and managing your movie collection with TMDb i
    ```
 4. Create a `.env` file in the root directory with your TMDb API key:
    ```
-   VITE_TMDB_API_KEY=your_api_key_here
+   VITE_THEMOVIEDB_API_KEY=your_api_key_here
+   VITE_THEMOVIEDB_API_URL=https://api.themoviedb.org/3
+   VITE_THEMOVIEDB_IMAGE_URL=https://image.tmdb.org/t/p/w400
    ```
 
 ### Available Script
