@@ -28,7 +28,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: $section-top-padding $horizontal-padding $section-bottom-padding $horizontal-padding;
+    padding: calc($section-top-padding / 2) $horizontal-padding calc($section-bottom-padding / 2) $horizontal-padding;
 
     .copyright-section,
     .photos-by-section {
@@ -47,8 +47,7 @@ footer {
       text-align: center;
       font-size: 1rem;
       gap: 0.8rem;
-      padding: $section-top-padding calc($horizontal-padding / 2) $section-bottom-padding
-        calc($horizontal-padding / 2);
+      padding: $section-top-padding calc($horizontal-padding / 2) $section-bottom-padding calc($horizontal-padding / 2);
     }
   }
 }
