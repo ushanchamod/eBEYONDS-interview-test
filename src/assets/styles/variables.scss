@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+$primary-color-background: #000000;
+$secondary-color-background: #1d1d1d;
+
+$border-color-white: #fff;
+
+$base-font: 'arial', sans-serif;
+
+$max-content-width: 80rem;
+
+$section-bottom-padding: 3rem;
+$section-top-padding: 3rem;
+$horizontal-padding: 2rem;
+
+$primary-color-foreground: #c49e08;
+$primary-color-hover: #d1a805;
+
+$main-title-font: 'Open Sans', sans-serif;
+$main-title-color: #fff;
+$main-title-font-size: 2.2rem;
+$main-title-font-weight: 600;
+
+$subtitle-font: 'Open Sans', sans-serif;
+$subtitle-color: #bdbdbd;
+$subtitle-font-size: 1.3rem;
+$subtitle-font-weight: 500;
+
+$movie-card-background: #353535;
+$movie-card-title-font: 'Open Sans', sans-serif;
+$movie-card-description-font: 'Open Sans', sans-serif;
+
+$font-white: #ffffff;
+$font-black: #000000;
+$font-gray: #b4b4b4;
+$danger-color: #e24545;
+
+$footer-text-color: $font-gray;
+$footer-border-color: #4e4e4e;
