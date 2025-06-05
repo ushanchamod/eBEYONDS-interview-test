@@ -1,3 +1,9 @@
+// A reusable input field component. // - Supports v-model binding using `modelValue` (String |
+Number). // - Accepts `label`, `type`, `id`, and `wrapperClass` as props for customization. // -
+Emits `update:modelValue` on input change and `blur` on input blur. // - Displays validation error
+styles and message when `error` is true and `errorMessage` is provided. // - Styled using SCSS with
+support for light and error states.
+
 <script setup>
 defineProps({
   id: String,
@@ -67,7 +73,6 @@ defineEmits(['update:modelValue', 'blur'])
     &:focus {
       outline: none;
       border-color: $primary-color-foreground;
-      // box-shadow: 0 0 0 2px $primary-color-foreground;
     }
 
     &.error {

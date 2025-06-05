@@ -1,3 +1,8 @@
+// A customizable button component. // - Uses `modelValue` (Boolean) to control whether the button
+is enabled. // - Emits `update:modelValue` with the opposite value when clicked. // - Accepts
+`wrapperClass` for custom classes and `style` for inline styling. // - Supports slot content for
+flexible button labeling.
+
 <script setup>
 defineProps({
   modelValue: Boolean,

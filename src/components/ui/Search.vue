@@ -1,3 +1,18 @@
+<!--
+  SearchInput.vue
+
+  A reusable movie search input component with dropdown results.
+
+  Features:
+  - Accepts a list of movie objects via `searchMovieList` prop.
+  - Emits `search` event on input for real-time filtering.
+  - Emits `add-movie` event when a movie is selected.
+  - Auto-clears input when clicked outside the component.
+  - Renders movie posters and titles in the dropdown.
+  - Shows fallback image when poster is unavailable.
+  - Supports styling via `styles` prop.
+-->
+
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 

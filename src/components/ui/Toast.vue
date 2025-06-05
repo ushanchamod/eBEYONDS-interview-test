@@ -1,3 +1,18 @@
+<!--
+  ToastContainer.vue
+
+  A simple toast notification component.
+
+  Features:
+  - Maintains a list of toasts using a reactive array.
+  - `showToast(message, duration)` adds a toast to the list and auto-removes it after `duration` ms.
+  - Can be triggered externally by exposing `showToast` via `defineExpose`.
+
+  Usage:
+  - Import and use the component in a parent.
+  - Access `showToast` using `ref` and call it to display a toast message.
+-->
+
 <template>
   <div id="toast-container">
     <div v-for="(toast, index) in toasts" :key="index" class="toast">

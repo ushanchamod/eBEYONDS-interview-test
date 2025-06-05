@@ -1,3 +1,14 @@
+<!--
+  TextareaInput.vue
+
+  A reusable textarea component for form inputs.
+
+  Features:
+  - Accepts `id`, `label`, `modelValue`, and optional `rows` (default is 4).
+  - Emits `update:modelValue` on user input for v-model binding.
+  - Supports custom styling via `wrapperClass` (optional).
+-->
+
 <script setup>
 defineProps({
   id: String,

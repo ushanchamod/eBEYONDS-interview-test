@@ -1,3 +1,7 @@
+// A reusable checkbox component. // - Binds `modelValue` (Boolean) to checkbox state using v-model
+pattern. // - Emits `update:modelValue` when the checkbox is toggled. // - Accepts `id` for
+input/label linking and `wrapperClass` for custom styling. // - Supports custom label text via slot.
+
 <script setup>
 defineProps({
   id: String,

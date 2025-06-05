@@ -165,21 +165,6 @@ export default {
           }
         }
       }
-
-      // .nav-button button {
-      //     font-size: 1.25rem;
-      //     background: $primary-color-foreground;
-      //     color: $primary-color-foreground;
-      //     border: none;
-      //     border-radius: 0.25rem;
-      //     padding: 0.5rem 0.75rem;
-      //     cursor: pointer;
-      //     transition: background 0.3s ease;
-
-      //     &:hover {
-      //         background: $primary-color-foreground;
-      //     }
-      // }
     }
   }
 }
@@ -315,7 +300,6 @@ export default {
   }
 }
 
-/* Responsive Behavior */
 @media (max-width: 1000px) {
   .desktop-nav {
     display: none;

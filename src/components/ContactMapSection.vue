@@ -152,7 +152,6 @@ import ContactForm from './ContactForm.vue'
   .contact-details {
     width: 100%;
     background-color: $secondary-color-background;
-    // padding: 2rem 0;
 
     .content {
       position: relative;
