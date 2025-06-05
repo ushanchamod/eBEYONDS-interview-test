@@ -64,25 +64,15 @@ const handleRemoveMovie = (movieId) => {
   <section>
     <div class="title-section">
       <h2 class="title">Collect your favorites</h2>
-      <Search
-        styles=""
-        @search="
-          (value) => {
-            searchValue = value
-          }
-        "
-        :searchMovieList="searchMovieList"
-        @add-movie="addMovieToList"
-      />
+      <Search styles="" @search="
+        (value) => {
+          searchValue = value
+        }
+      " :searchMovieList="searchMovieList" @add-movie="addMovieToList" />
     </div>
     <div class="card-container">
-      <MovieCard
-        v-if="movieList.length > 0"
-        v-for="movie in movieList"
-        :key="movie.id"
-        :movie="movie"
-        @remove-movie="handleRemoveMovie"
-      />
+      <MovieCard v-if="movieList.length > 0" v-for="movie in movieList" :key="movie.id" :movie="movie"
+        @remove-movie="handleRemoveMovie" />
 
       <div v-else class="no-movies">
         <p>No movies found. Please search for a movie to add to your list.</p>
@@ -152,13 +142,12 @@ section {
     }
 
     @media (max-width: 480px) {
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
     }
   }
 
   @media (max-width: 780px) {
-    padding: $section-top-padding calc($horizontal-padding / 2) $section-bottom-padding
-      calc($horizontal-padding / 2);
+    padding: $section-top-padding calc($horizontal-padding / 2) $section-bottom-padding calc($horizontal-padding / 2);
   }
 }
 </style>

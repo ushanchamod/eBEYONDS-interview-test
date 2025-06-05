@@ -17,49 +17,22 @@ const removeMovie = (movieId) => {
 <template>
   <div class="card">
     <div class="image-section">
-      <img
-        v-if="movie.poster_path"
-        :src="`${imageBaseUrl}${movie.poster_path}`"
-        :alt="movie.title || movie.original_title"
-        class="movie-poster"
-      />
+      <img v-if="movie.poster_path" :src="`${imageBaseUrl}${movie.poster_path}`"
+        :alt="movie.title || movie.original_title" class="movie-poster" />
 
       <div v-else class="placeholder-poster">
         <img src="../assets/icons/crash_image.webp" alt="placeholder poster" />
       </div>
 
       <div class="svg-icon" @click="removeMovie(movie.id)">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="12.728"
-          height="12.728"
-          viewBox="0 0 12.728 12.728"
-          class="icon-plus"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" width="12.728" height="12.728" viewBox="0 0 12.728 12.728"
+          class="icon-plus">
           <g id="Group_8592" data-name="Group 8592" transform="translate(-441.636 -1013.036)">
-            <g
-              id="Group_8586"
-              data-name="Group 8586"
-              transform="translate(1226.737 -260.675) rotate(45)"
-            >
-              <line
-                id="Line_133"
-                data-name="Line 133"
-                x2="16"
-                transform="translate(346.5 1455.8)"
-                fill="none"
-                stroke="#fff"
-                stroke-width="2"
-              />
-              <line
-                id="Line_134"
-                data-name="Line 134"
-                x2="16"
-                transform="translate(354.5 1447.8) rotate(90)"
-                fill="none"
-                stroke="#fff"
-                stroke-width="2"
-              />
+            <g id="Group_8586" data-name="Group 8586" transform="translate(1226.737 -260.675) rotate(45)">
+              <line id="Line_133" data-name="Line 133" x2="16" transform="translate(346.5 1455.8)" fill="none"
+                stroke="#fff" stroke-width="2" />
+              <line id="Line_134" data-name="Line 134" x2="16" transform="translate(354.5 1447.8) rotate(90)"
+                fill="none" stroke="#fff" stroke-width="2" />
             </g>
           </g>
         </svg>
@@ -88,6 +61,12 @@ const removeMovie = (movieId) => {
 .card {
   width: 100%;
   cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: $movie-card-background;
 
   .image-section {
     width: 100%;
@@ -160,7 +139,7 @@ const removeMovie = (movieId) => {
     align-items: flex-start;
     gap: 0.5rem;
 
-    height: 12rem;
+    height: fit-content;
 
     .movie-name {
       font-size: 1.6rem;
