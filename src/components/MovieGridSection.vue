@@ -3,41 +3,62 @@ import { onMounted, ref, watch } from 'vue'
 import MovieCard from './MovieCard.vue'
 import Search from './ui/Search.vue'
 import Toast from './ui/Toast.vue'
+import { fetchTrendingMovies, searchMovies } from '@/composables/useMovieApi'
 
 const themoviedbBaseUrl = import.meta.env.VITE_THEMOVIEDB_API_URL
 const themoviedbApiKey = import.meta.env.VITE_THEMOVIEDB_API_KEY
 
 const toastRef = ref()
-
 const movieList = ref([])
 const searchMovieList = ref([])
 const searchValue = ref('')
+const isLoading = ref(false)
+const searchLoading = ref(false)
+const error = ref(null)
+
+let debounceTimeout = null
+function debounce(fn, delay) {
+  return function (...args) {
+    if (debounceTimeout) clearTimeout(debounceTimeout)
+    debounceTimeout = setTimeout(() => {
+      fn(...args)
+    }, delay)
+  }
+}
 
 onMounted(async () => {
-  const url = `${themoviedbBaseUrl}/trending/movie/day?language=en-US&api_key=${themoviedbApiKey}`
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-    },
+  isLoading.value = true
+  error.value = null
+  try {
+    const trending = await fetchTrendingMovies(themoviedbBaseUrl, themoviedbApiKey)
+    movieList.value = trending.slice(0, 3)
+  } catch (err) {
+    error.value = 'Failed to load trending movies.'
+  } finally {
+    isLoading.value = false
+  }
+})
+
+const handleSearch = debounce(async (query) => {
+  if (!query) {
+    searchMovieList.value = []
+    return
   }
 
-  const res = await fetch(url, options)
-  const json = await res.json()
-  movieList.value = json.results.slice(0, 3)
-  console.log(movieList.value[0])
+  error.value = null
+  try {
+    searchLoading.value = true
+    const results = await searchMovies(themoviedbBaseUrl, themoviedbApiKey, query)
+    searchMovieList.value = results
+  } catch (err) {
+    error.value = 'Failed to search movies.'
+  } finally {
+    searchLoading.value = false
+  }
+}, 500)
 
-  watch(searchValue, async (newValue) => {
-    if (newValue) {
-      const searchUrl = `${themoviedbBaseUrl}/search/movie?query=${encodeURIComponent(newValue)}&language=en-US&api_key=${themoviedbApiKey}`
-      const searchRes = await fetch(searchUrl, options)
-      const searchJson = await searchRes.json()
-      searchMovieList.value = searchJson.results
-      console.log(searchMovieList.value)
-    } else {
-      searchMovieList.value = []
-    }
-  })
+watch(searchValue, (newVal) => {
+  handleSearch(newVal)
 })
 
 const notifyUser = (message) => {
@@ -64,19 +85,28 @@ const handleRemoveMovie = (movieId) => {
   <section>
     <div class="title-section">
       <h2 class="title">Collect your favorites</h2>
-      <Search styles="" @search="
-        (value) => {
-          searchValue = value
-        }
-      " :searchMovieList="searchMovieList" @add-movie="addMovieToList" />
+      <Search
+        @search="(value) => (searchValue = value)"
+        :searchMovieList="searchMovieList"
+        :searchLoading="searchLoading"
+        @add-movie="addMovieToList"
+        :loading="isLoading"
+      />
     </div>
-    <div class="card-container">
-      <MovieCard v-if="movieList.length > 0" v-for="movie in movieList" :key="movie.id" :movie="movie"
-        @remove-movie="handleRemoveMovie" />
 
-      <div v-else class="no-movies">
-        <p>No movies found. Please search for a movie to add to your list.</p>
-      </div>
+    <div v-if="isLoading" class="loading">Loading...</div>
+    <div v-else-if="!isLoading && !error" class="error">{{ error }}</div>
+    <div v-else class="no-movies">
+      <p>No movies found. Please search for a movie to add to your list.</p>
+    </div>
+
+    <div class="card-container">
+      <MovieCard
+        v-for="movie in movieList"
+        :key="movie.id"
+        :movie="movie"
+        @remove-movie="handleRemoveMovie"
+      />
     </div>
   </section>
 </template>
@@ -115,7 +145,7 @@ section {
       gap: 1rem;
       align-items: flex-start;
 
-      title {
+      .title {
         font-size: 1.8rem;
         text-align: center;
         white-space: normal;
@@ -146,8 +176,23 @@ section {
     }
   }
 
+  .loading {
+    text-align: center;
+    font-size: 1.2rem;
+    color: $font-gray;
+    padding: 1rem;
+  }
+
+  .error {
+    text-align: center;
+    color: red;
+    font-size: 1.1rem;
+    padding: 1rem;
+  }
+
   @media (max-width: 780px) {
-    padding: $section-top-padding calc($horizontal-padding / 2) $section-bottom-padding calc($horizontal-padding / 2);
+    padding: $section-top-padding calc($horizontal-padding / 2) $section-bottom-padding
+      calc($horizontal-padding / 2);
   }
 }
 </style>

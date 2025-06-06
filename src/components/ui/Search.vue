@@ -11,6 +11,7 @@
   - Renders movie posters and titles in the dropdown.
   - Shows fallback image when poster is unavailable.
   - Supports styling via `styles` prop.
+  - Displays loading state and no results message.
 -->
 
 <script setup>
@@ -26,6 +27,10 @@ const props = defineProps({
   searchMovieList: {
     type: Array,
     default: () => [],
+  },
+  searchLoading: {
+    type: Boolean,
+    default: false,
   },
 })
 
@@ -94,28 +99,36 @@ onBeforeUnmount(() => {
         aria-label="Search movies"
       />
 
-      <ul v-if="searchMovieList.length > 0" class="search-list">
-        <li v-for="(movie, index) in searchMovieList" :key="index">
-          <img
-            v-if="movie.poster_path"
-            :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
-            alt="movie poster"
-            class="movie-poster"
-            loading="lazy"
-          />
-          <div v-else class="movie-poster crash-image">
-            <img src="../../assets/icons/crash_image.webp" alt="placeholder poster" />
-          </div>
-          <span class="movie-title">{{ movie.title }}</span>
-          <button
-            @click.stop="emit('add-movie', movie)"
-            class="btn btn-primary add-button"
-            aria-label="Add to grid"
-          >
-            add to grid
-          </button>
-        </li>
-      </ul>
+      <div class="search-list" v-if="searchInput?.value?.length">
+        <ul v-if="searchLoading" class="loading-list">
+          <li>Loading...</li>
+        </ul>
+        <ul v-else-if="!searchMovieList.length" class="no-results">
+          <li>No results found</li>
+        </ul>
+        <ul v-else class="movie-list">
+          <li v-for="(movie, index) in searchMovieList" :key="index">
+            <img
+              v-if="movie.poster_path"
+              :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+              alt="movie poster"
+              class="movie-poster"
+              loading="lazy"
+            />
+            <div v-else class="movie-poster crash-image">
+              <img src="../../assets/icons/crash_image.webp" alt="placeholder poster" />
+            </div>
+            <span class="movie-title">{{ movie.title }}</span>
+            <button
+              @click.stop="emit('add-movie', movie)"
+              class="btn btn-primary add-button"
+              aria-label="Add to grid"
+            >
+              add to grid
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -300,6 +313,29 @@ onBeforeUnmount(() => {
       &:active {
         transform: translateY(0);
       }
+    }
+
+    .loading-list,
+    .no-results {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      color: $font-gray;
+      font-size: 1rem;
+      padding: 1rem;
+
+      li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+    }
+    .loading-list {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    .no-results {
+      background-color: rgba(255, 255, 255, 0.1);
     }
   }
 }
